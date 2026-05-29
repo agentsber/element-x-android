@@ -2,7 +2,7 @@ name: Build VPrime X chat APK
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
 
 permissions:
