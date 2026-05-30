@@ -87,6 +87,13 @@ android {
             storeFile = file("./signature/debug.keystore")
             storePassword = "android"
         }
+        register("release") {
+            storeFile = System.getenv("KEYSTORE_PATH")?.let { file(it) }
+                ?: file("./signature/vprime-release.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("KEY_ALIAS") ?: "vprime"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+        }
         register("nightly") {
             keyAlias = System.getenv("ELEMENT_ANDROID_NIGHTLY_KEYID")
                 ?: project.property("signing.element.nightly.keyId") as? String?
@@ -122,7 +129,7 @@ android {
                 "login_redirect_scheme",
                 oAuthRedirectSchemeBase,
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
 
             optimization {
                 enable = true
@@ -148,6 +155,13 @@ android {
             }
         }
 
+        register("release") {
+            storeFile = System.getenv("KEYSTORE_PATH")?.let { file(it) }
+                ?: file("./signature/vprime-release.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("KEY_ALIAS") ?: "vprime"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+        }
         register("nightly") {
             val release = getByName("release")
             initWith(release)
